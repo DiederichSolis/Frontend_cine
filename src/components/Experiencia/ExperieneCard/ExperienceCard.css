@@ -1,0 +1,82 @@
+.experience-card{
+    background: linear-gradient(180deg, #0c1629 0%, #2d4561 100%); 
+    border:4px solid rgb(201, 201, 201);
+    border-radius: 0.65rem;
+    padding: 1.5rem;
+    margin:0 1rem;
+
+}
+
+.experience-card h6{
+    font-size: 1.35rem;
+    font-weight: 500;
+    font-weight: bold;
+    margin-bottom: 0.7rem;
+}
+
+.experience-card ul li{
+list-style: none;
+font-size: 1rem;
+font-weight: 400;
+margin-bottom: 0.5rem;
+position: relative;
+}
+
+.experience-card ul li::after{
+
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    background:linear-gradient(180deg, #E85D04 0%, #FB8500 100%);
+    border-radius: 0.5rem;
+    position: absolute;
+    left: -1.3rem;
+    top: 0.35rem;
+
+}
+
+.lugartrabajos{
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 400;
+    font-weight: bold;
+    background: linear-gradient(180deg, #E85D04 0%, #FB8500 100%);
+    border-radius: 0.3rem;
+    padding: 0.4rem 0.6rem;
+    margin-bottom: 1.3rem;
+
+}
+
+.images img{
+    display: flex;
+    align-items: flex-end;
+    margin: 0 auto;
+    gap:2rem;
+    width: 60%;
+    height: 60%;
+    border-radius: 10px;
+    cursor: pointer;
+
+}
+
+.images img:hover{
+    transform: translateY(-0.5rem);
+
+}
+
+@media(max-width: 768px){
+
+    .experience-card{
+        margin: 0;
+    }
+
+    .experience-card h6{
+        font-size: 0.95rem;
+    }
+
+    .experience-card ul li{
+
+        font-size: 0.75rem;
+    }
+
+}

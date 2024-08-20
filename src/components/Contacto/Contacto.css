@@ -1,0 +1,28 @@
+.contacto-contenedor{
+    margin: 4rem 0;
+    position: relative;
+}
+
+.contacto-contenedor h5{
+    font-size: 2rem;
+    font-weight: 600;
+    font-weight: bold;
+    margin-bottom: 3rem;
+}
+
+
+.contacto-cont{
+    display: flex;
+    gap: 3rem;
+}
+
+@media(max-width:768px){
+    .contacto-cont{
+        flex-direction: column-reverse;
+    }
+
+    .contacto-contenedor h5{
+        font-size: 1.3rem;
+        margin-bottom: 0rem;
+    }
+}

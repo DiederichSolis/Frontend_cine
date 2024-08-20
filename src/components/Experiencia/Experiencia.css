@@ -1,0 +1,68 @@
+.exp-contenedor{
+    margin: 4rem 0;
+    position: relative;
+}
+
+.exp-contenedor h5{
+    font-size: 2rem;
+    font-weight: 600;
+    font-weight: bold;
+    margin-bottom: 3rem;
+}
+
+
+.arrow-left,
+.arrow-right{
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.65rem;
+    border: 2.8px  ;
+    background: linear-gradient(180deg, #E85D04 0%, #FB8500 100%);
+    position: absolute;
+    top: 55%;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.arrow-left span,
+.arrow-right span{
+
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.arrow-left{
+    left: -3.2rem;
+}
+
+.arrow-right{
+    right: -3.2rem;
+}
+
+@media(max-width: 1025px){
+    .arrow-left{
+        left: 0rem;
+    }
+
+    .arrow-right{
+        right: 0;
+    }
+}
+
+@media(max-width: 768px){
+    .exp-contenedor h5{
+        font-size: 1.3rem;
+        margin-bottom: 2rem;
+    }
+
+    .arrow-left{
+        left: -1rem;
+    }
+
+    .arrow-right{
+        right: -1rem;
+    }
+}

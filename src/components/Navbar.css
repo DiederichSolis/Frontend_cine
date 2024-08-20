@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Century+Gothic&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
+
+
+.style1 {
+    background: black;
+    padding: 0.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    backdrop-filter: blur(50px);
+}
+
+.content {
+    max-width: 1300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    margin: 0 auto;
+}
+
+.logo {
+    width: 15%;
+    height: auto;
+    
+}
+
+.content ul {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+}
+
+.content li {
+    margin: 0 1.5rem;
+}
+
+.catalogo {
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: white;
+    position: relative;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.catalogo::before {
+    content:"";
+    width: 2rem;
+    height: 0.2rem;
+    background: linear-gradient(90deg, #9D0208 0%, #FFBA08 100%);
+    border-radius: 0.5rem;
+    position: absolute;
+    bottom: -0.6rem;
+    opacity: 0;
+    transform: translateX(-1.5rem);
+    transition: all 0.5s ease;
+}
+
+.catalogo:hover::before {
+    width: 100%;
+    transform: translateX(0);
+    opacity: 1;
+}
+.contactarme {
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: linear-gradient(90deg, #FB8500 0%, #FAA307 100%);
+    padding: 0.6rem 2rem;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: bold;
+    outline: 1.5px solid transparent;
+    transition: all 0.5s ease;
+}
+
+.no-underline {
+    text-decoration: none; /* Elimina el subrayado de los enlaces */
+  }
+
+
+.contactarme:hover{
+    color: white;
+    background: black;
+    outline: 1.5px solid #FB8500;
+}
+
+.imgtrans{
+    width: 45%;
+}
+
+.language-text {
+    font-size: 12px; 
+}
+.languaje {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 0.4rem 0.4rem;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: bold;
+    outline: 1.5px solid transparent;
+    transition: all 0.5s ease;
+    flex-direction: column;
+}
+
+
+.languaje:hover {
+    color: white;
+    background: black;
+    outline: 1.5px solid #FB8500;
+}
+
+.opcionestyle { 
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border:none;
+    border-radius: 0.4rem;
+    color:white;
+    background: linear-gradient(90deg, #FB8500 -0.15%, #FAA307 99.85%);
+    line-height: 0;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    display: none;
+    
+}
+
+
+    .tabs {
+
+        background-color: lightgreen; 
+        color: white;
+        padding: 20px;
+        text-align: center;
+        font-size: 16px;
+        float: left;
+    }
+    
+    .tabs:hover {
+        background-color: green;
+    }
+
+
+.opcionestyle:hover {
+    color:#FB8500;
+    background: black;
+    border: 1px solid #FB8500;
+}
+
+@media (max-width: 425px) {
+    .logo{
+        width: 68px;
+        height: 68px;
+    }
+}
+
+@media (max-width: 768px) {   /*es para que cuando la pantalla llegue a ese limite no muestre el contenido es decir cambia la propiedad de display */
+    .opcionestyle{
+        display: block;
+    }
+
+    .content ul {
+        display: none;
+    }
+
+}
+
+@media (max-width: 1024px) {
+    .style1{
+        padding: 0 2rem;
+    }
+}
+
+
+
