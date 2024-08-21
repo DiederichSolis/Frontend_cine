@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    background-color: #f8f8f8;
+    background: linear-gradient(180deg, #003049 0%, #343a40 100%); 
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     max-width: 600px;
@@ -22,13 +22,13 @@
 
 .movie-details-container h1 {
     font-size: 2rem;
-    color: #333;
+    color: white;
     margin-bottom: 10px;
 }
 
 .movie-details-container p {
     font-size: 1rem;
-    color: #555;
+    color: white;
     margin-bottom: 20px;
 }
 
@@ -42,7 +42,7 @@
 /* Estilo para el encabezado de showtimes */
 .showtimes-buttons h2 {
     font-size: 1.5rem;
-    color: #333;
+    color: white;
     margin-bottom: 15px;
 }
 

@@ -106,7 +106,7 @@ const Experiencia = ({ language }) => {
                 <img src={selectedMovie.image_url} alt={selectedMovie.title} />
 
                 <div className="showtimes-buttons">
-                    <h2>Showtimes</h2>
+                    <h2>Showtimes-DOB</h2>
                     {noShowtimesMessage ? (
                         <p>{noShowtimesMessage}</p>
                     ) : (
