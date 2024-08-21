@@ -1,25 +1,108 @@
-.exp-contenedor{
+/* CSS para el contenedor de detalles de la película */
+.movie-details-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.movie-details-container h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.movie-details-container p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.movie-details-container img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para el encabezado de showtimes */
+.showtimes-buttons h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Estilo para los botones de showtime */
+.showtimes-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.showtime-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.showtime-button:hover {
+    background-color: #0056b3;
+}
+
+/* Botón de volver */
+.back-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+}
+
+
+/* Estilos para el contenedor de la experiencia */
+.exp-contenedor {
     margin: 4rem 0;
     position: relative;
 }
 
-.exp-contenedor h5{
+.exp-contenedor h5 {
     font-size: 2rem;
     font-weight: 600;
     font-weight: bold;
     margin-bottom: 3rem;
 }
 
-
+/* Estilos para las flechas del slider */
 .arrow-left,
-.arrow-right{
+.arrow-right {
     width: 3rem;
     height: 3rem;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 0.65rem;
-    border: 2.8px  ;
+    border: 2.8px;
     background: linear-gradient(180deg, #343a40 0%, #495057 100%);
     position: absolute;
     top: 55%;
@@ -28,41 +111,40 @@
 }
 
 .arrow-left span,
-.arrow-right span{
-
+.arrow-right span {
     font-size: 2rem;
     font-weight: 500;
 }
 
-.arrow-left{
+.arrow-left {
     left: -3.2rem;
 }
 
-.arrow-right{
+.arrow-right {
     right: -3.2rem;
 }
 
-@media(max-width: 1025px){
-    .arrow-left{
+@media (max-width: 1025px) {
+    .arrow-left {
         left: 0rem;
     }
 
-    .arrow-right{
+    .arrow-right {
         right: 0;
     }
 }
 
-@media(max-width: 768px){
-    .exp-contenedor h5{
+@media (max-width: 768px) {
+    .exp-contenedor h5 {
         font-size: 1.3rem;
         margin-bottom: 2rem;
     }
 
-    .arrow-left{
+    .arrow-left {
         left: -1rem;
     }
 
-    .arrow-right{
+    .arrow-right {
         right: -1rem;
     }
 }
