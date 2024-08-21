@@ -19,11 +19,13 @@ const Experiencia = ({ language }) => {
     
                 // Actualiza el estado con los datos
                 const transformedData = data.map(item => ({
+                    id: item.id, // Añadir el id aquí
                     title: item.title,
                     date: item.release_date,
                     responsabilidades: [item.description],
                     imagenes: [item.image_url]
                 }));
+                
     
                 setExperienciaW(transformedData);
                 console.log('EXPERIENCIA_W:', transformedData);

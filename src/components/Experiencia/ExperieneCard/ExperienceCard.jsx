@@ -5,8 +5,32 @@ import { faTicketAlt } from '@fortawesome/free-solid-svg-icons';
 
 const ExperienceCard = ({ detalles }) => {
     const handleViewClick = () => {
-        // Aquí puedes definir la acción a realizar cuando se haga clic en el botón
-        alert(`Detalles de ${detalles.title}`);
+        // Captura el ID de la película
+        const movieId = detalles.id;
+
+        // Construye la URL de la API con el ID de la película
+        const apiUrl = `http://127.0.0.1:8000/showtimes/${movieId}`;
+
+        // Realiza la petición a la API de showtimes
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Procesa la información de los showtimes obtenidos
+                console.log('Showtimes:', data);
+
+                // Aquí puedes decidir cómo mostrar la información, por ejemplo, abriendo un modal
+                showShowtimesModal(data);
+            })
+            .catch(error => {
+                console.error('Error fetching showtimes:', error);
+            });
+    };
+
+    // Función para mostrar la información en un modal
+    const showShowtimesModal = (showtimes) => {
+        // Implementa la lógica para mostrar la información, por ejemplo usando un estado
+        // para controlar la visibilidad de un modal
+        alert(`Showtimes para ${detalles.title}: ${JSON.stringify(showtimes)}`);
     };
 
     return (
@@ -14,7 +38,6 @@ const ExperienceCard = ({ detalles }) => {
             <h6>{detalles.title}</h6>
             <div className="lugartrabajos">{detalles.date}</div>
             
-            {/* Asegúrate de que `responsabilidades` sea un arreglo y mapea sobre él */}
             <div className="responsabilidades">
                 {detalles.responsabilidades && detalles.responsabilidades.length > 0 ? (
                     detalles.responsabilidades.map((resp, index) => (
@@ -25,7 +48,6 @@ const ExperienceCard = ({ detalles }) => {
                 )}
             </div>
 
-            {/* Asegúrate de que `imagenes` sea un arreglo y mapea sobre él */}
             <div className="images">
                 {detalles.imagenes && detalles.imagenes.length > 0 ? (
                     detalles.imagenes.map((img, index) => (
@@ -36,12 +58,11 @@ const ExperienceCard = ({ detalles }) => {
                 )}
             </div>
 
-            {/* Botón con ícono de ticket */}
             <button className="view-button" onClick={handleViewClick}>
                 <FontAwesomeIcon icon={faTicketAlt} />
             </button>
         </div>
     );
-}
+};
 
 export default ExperienceCard;
