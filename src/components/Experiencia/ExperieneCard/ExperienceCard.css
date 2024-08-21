@@ -1,6 +1,5 @@
 .experience-card{
     background: linear-gradient(180deg, #003049 0%, #343a40 100%); 
-    
     border-radius: 0.65rem;
     padding: 1.5rem;
     margin:0 1rem;
@@ -13,7 +12,7 @@
     font-size: 1rem;
     font-weight: 500;
     color: white;
-    background: linear-gradient(90deg, #cc5803 0%, #ff9505 100%);
+    background: linear-gradient(90deg, #af5500 0%, #ff9500 100%);
     padding: 0.6rem 2rem;
     cursor: pointer;
     border-radius: 10px;
@@ -23,6 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
 }
 
 
