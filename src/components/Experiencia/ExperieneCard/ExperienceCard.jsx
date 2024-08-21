@@ -1,5 +1,7 @@
 import React from "react";
 import './ExperienceCard.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTicketAlt } from '@fortawesome/free-solid-svg-icons';
 
 const ExperienceCard = ({ detalles }) => {
     const handleViewClick = () => {
@@ -34,9 +36,9 @@ const ExperienceCard = ({ detalles }) => {
                 )}
             </div>
 
-            {/* Botón "Ver" */}
+            {/* Botón con ícono de ticket */}
             <button className="view-button" onClick={handleViewClick}>
-                Ver
+                <FontAwesomeIcon icon={faTicketAlt} />
             </button>
         </div>
     );

@@ -1,9 +1,10 @@
 .experience-card{
-    background: linear-gradient(180deg, #0c1629 0%, #2d4561 100%); 
-    border:4px solid rgb(201, 201, 201);
+    background: linear-gradient(180deg, #003049 0%, #343a40 100%); 
+    
     border-radius: 0.65rem;
     padding: 1.5rem;
     margin:0 1rem;
+    
 
 }
 
@@ -11,23 +12,23 @@
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     color: white;
-    background: linear-gradient(90deg, #FB8500 0%, #FAA307 100%);
+    background: linear-gradient(90deg, #cc5803 0%, #ff9505 100%);
     padding: 0.6rem 2rem;
     cursor: pointer;
     border-radius: 10px;
     font-weight: bold;
     outline: 1.5px solid transparent;
     transition: all 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 
 .view-button:hover{
     color: white;
-    background: black;
-    outline: 1.5px solid #FB8500;
+    background: linear-gradient(90deg, #ff9505 0%, #cc5803 100%);
 }
 
 
@@ -64,7 +65,7 @@ position: relative;
     font-size: 0.7rem;
     font-weight: 400;
     font-weight: bold;
-    background: linear-gradient(180deg, #E85D04 0%, #FB8500 100%);
+    background: linear-gradient(180deg, #343a40 0%, #495057 100%);
     border-radius: 0.3rem;
     padding: 0.4rem 0.6rem;
     margin-bottom: 1.3rem;

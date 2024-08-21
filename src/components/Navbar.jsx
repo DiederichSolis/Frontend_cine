@@ -25,7 +25,7 @@ const Navbar = ({ onLanguageChange, language }) => {
               <Link to="home" smooth={true} duration={500} className="catalogo">{language === 'es' ? 'Home' : 'Home'}</Link>
             </li>
             <li>
-              <Link to="experience" smooth={true} duration={500} className="catalogo">{language === 'es' ? 'Peliculas' : 'Movies'}</Link>
+              <Link to="experience" smooth={true} duration={500} className="catalogo">{language === 'es' ? 'Cartelera' : 'Movies'}</Link>
             </li>
             <li>
               <Link to="contact" smooth={true} duration={500} className="catalogo">{language === 'es' ? 'Contactarme' : 'Contact Me'}</Link>
