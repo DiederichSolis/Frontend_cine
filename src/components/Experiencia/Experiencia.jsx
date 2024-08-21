@@ -1,25 +1,22 @@
 import React, { useRef, useState, useEffect } from "react";
 import './Experiencia.css';
 import ExperienceCard from "./ExperieneCard/ExperienceCard";
+import RoomCard from "./RoomCard"; // Importa tu nuevo componente
 import Slider from "react-slick";
 
 const Experiencia = ({ language }) => {
     const [experienciaW, setExperienciaW] = useState([]);
-    const [selectedMovie, setSelectedMovie] = useState(null); // Estado para la película seleccionada
-    const [showtimes, setShowtimes] = useState([]); // Estado para los showtimes
-    const [noShowtimesMessage, setNoShowtimesMessage] = useState(""); // Estado para el mensaje de no showtimes
+    const [selectedMovie, setSelectedMovie] = useState(null);
+    const [showtimes, setShowtimes] = useState([]);
+    const [noShowtimesMessage, setNoShowtimesMessage] = useState("");
+    const [selectedRoomId, setSelectedRoomId] = useState(null); // Estado para el ID del room seleccionado
     const sliderRef = useRef();
 
     useEffect(() => {
         async function fetchData() {
             try {
                 const response = await fetch('http://127.0.0.1:8000/movies');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
                 const data = await response.json();
-                console.log('Datos recibidos:', data);
-
                 const transformedData = data.map(item => ({
                     id: item.id,
                     title: item.title,
@@ -29,7 +26,6 @@ const Experiencia = ({ language }) => {
                 }));
 
                 setExperienciaW(transformedData);
-                console.log('EXPERIENCIA_W:', transformedData);
             } catch (error) {
                 console.error('Error al recibir datos:', error);
             }
@@ -51,20 +47,24 @@ const Experiencia = ({ language }) => {
                 setNoShowtimesMessage('No hay funciones disponibles');
                 setShowtimes([]);
             } else {
-                // Asegúrate de que showtimeData sea una lista
                 if (Array.isArray(showtimeData)) {
                     setShowtimes(showtimeData);
                 } else {
-                    // Si es un solo objeto, conviértelo en una lista
                     setShowtimes([showtimeData]);
                 }
-                setNoShowtimesMessage(''); // Limpia el mensaje si hay showtimes
+                setNoShowtimesMessage('');
             }
-
-            console.log('Datos de showtime:', showtimeData);
         } catch (error) {
             console.error('Error fetching movie or showtime data:', error);
         }
+    };
+
+    const handleShowtimeClick = (roomId) => {
+        setSelectedRoomId(roomId); // Establece el ID del room seleccionado
+    };
+
+    const handleBackClick = () => {
+        setSelectedRoomId(null);
     };
 
     const settings = {
@@ -93,8 +93,12 @@ const Experiencia = ({ language }) => {
         sliderRef.current.slickPrev();
     };
 
+    if (selectedRoomId) {
+        // Muestra el componente RoomCard si un room ha sido seleccionado
+        return <RoomCard roomId={selectedRoomId} onBackClick={handleBackClick} />;
+    }
+
     if (selectedMovie) {
-        // Si hay una película seleccionada, muestra los detalles de la película y los showtimes
         return (
             <div className="movie-details-container">
                 <h1>{selectedMovie.title}</h1>
@@ -104,12 +108,16 @@ const Experiencia = ({ language }) => {
                 <div className="showtimes-buttons">
                     <h2>Showtimes</h2>
                     {noShowtimesMessage ? (
-                        <p>{noShowtimesMessage}</p> // Muestra el mensaje de no showtimes si existe
+                        <p>{noShowtimesMessage}</p>
                     ) : (
                         showtimes.length > 0 ? (
                             showtimes.map((showtime, index) => (
-                                <button key={index} className="showtime-button">
-                                    {showtime.showtime} {/* Asegúrate de que el campo sea 'showtime' */}
+                                <button
+                                    key={index}
+                                    className="showtime-button"
+                                    onClick={() => handleShowtimeClick(showtime.room_id)} // Pasa el room_id al hacer clic
+                                >
+                                    {showtime.showtime}
                                 </button>
                             ))
                         ) : (

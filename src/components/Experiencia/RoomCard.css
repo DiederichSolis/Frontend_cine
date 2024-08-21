@@ -1,0 +1,31 @@
+/* RoomCard.css */
+.room-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px;
+    text-align: center;
+    color: black;
+}
+
+.room-card h2 {
+    margin-top: 0;
+}
+
+.room-card p {
+    margin: 10px 0;
+}
+
+.room-card button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.room-card button:hover {
+    background-color: #0056b3;
+}
