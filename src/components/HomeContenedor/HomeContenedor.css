@@ -3,7 +3,7 @@
     background: url(./cinn.jpg) no-repeat center center fixed;
     background-size: cover;
     height: 80vh; /* Ocupar toda la altura de la pantalla */
-    width: 100vw; /* Ocupar todo el ancho de la pantalla */
+    width: 70vw; /* Ocupar todo el ancho de la pantalla */
     display: flex;
     justify-content: flex-start; /* Alinear contenido al lado izquierdo */
     align-items: center; /* Centrar verticalmente el contenido */
