@@ -13,12 +13,12 @@ const Contacto = ({ language }) =>{
                
                 <CardContacto 
                 iconURL="https://firebasestorage.googleapis.com/v0/b/imagenes-b9423.appspot.com/o/gmail.png?alt=media&token=fa3ad967-46db-4988-95a8-2de6c2beb1ac"
-                text="Diederich.josue.emidio@gmail.com"
+                text="sac_ca@cinepolis.com"
                 />
                 
                 <CardContacto 
-                iconURL="https://firebasestorage.googleapis.com/v0/b/imagenes-b9423.appspot.com/o/github%20(1).png?alt=media&token=4f760d80-9c08-42cd-9c76-de3212aa874c"
-                text="https://github.com/DiederichSolis"
+                iconURL="https://firebasestorage.googleapis.com/v0/b/cine-245c1.appspot.com/o/cine.png?alt=media&token=bc9f6b07-c445-437e-9150-20f678b3a8a3"
+                text="https://cinepolis.com.gt/cartelera/guatemala-guatemala"
                 />
 
             </div>
