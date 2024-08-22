@@ -6,7 +6,7 @@ import ContactoForm from "./ContactoForm/ContactoForm";
 const Contacto = ({ language }) =>{
     return (
         <section className="contacto-contenedor">
-            <h5>{language === 'es' ? 'Contacto' : 'Contact Me'}</h5>
+            <h5>{language === 'es' ? 'Contactanos' : 'Contact Us'}</h5>
 
             <div className="contacto-cont">
                 <div style={{flex: 1}}>
