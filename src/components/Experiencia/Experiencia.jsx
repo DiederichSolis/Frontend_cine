@@ -4,12 +4,13 @@ import ExperienceCard from "./ExperieneCard/ExperienceCard";
 import RoomCard from "./RoomCard"; // Importa tu nuevo componente
 import Slider from "react-slick";
 
-const Experiencia = ({ language }) => {
+const Experiencia = ({ language, onMovieSelect }) => { // Agregamos onMovieSelect como prop
     const [experienciaW, setExperienciaW] = useState([]);
     const [selectedMovie, setSelectedMovie] = useState(null);
     const [showtimes, setShowtimes] = useState([]);
     const [noShowtimesMessage, setNoShowtimesMessage] = useState("");
-    const [selectedRoomId, setSelectedRoomId] = useState(null); // Estado para el ID del room seleccionado
+    const [selectedRoomId, setSelectedRoomId] = useState(null); 
+    const [selectedShowtime, setSelectedShowtime] = useState(null); // Agrega estado para showtime seleccionado
     const sliderRef = useRef();
 
     useEffect(() => {
@@ -59,13 +60,36 @@ const Experiencia = ({ language }) => {
         }
     };
 
-    const handleShowtimeClick = (roomId) => {
-        setSelectedRoomId(roomId); // Establece el ID del room seleccionado
+
+    const handleShowtimeClick = (roomId, showtime) => {
+        setSelectedRoomId(roomId);
+        setSelectedShowtime(showtime);
+        if (onMovieSelect && selectedMovie) {
+            onMovieSelect({
+                movieName: selectedMovie.title,
+                showtime,
+                roomId
+            });
+        }
     };
 
     const handleBackClick = () => {
         setSelectedRoomId(null);
+        setSelectedShowtime(null);
+        setSelectedMovie(null);
     };
+
+    if (selectedRoomId && selectedMovie && selectedShowtime) {
+        // Muestra el componente RoomCard si un room ha sido seleccionado
+        return (
+            <RoomCard 
+                roomId={selectedRoomId} 
+                onBackClick={handleBackClick}
+                movieName={selectedMovie.title}  // Pasa movieName
+                showtime={selectedShowtime}      // Pasa showtime
+            />
+        );
+    }
 
     const settings = {
         dots: false,
@@ -115,7 +139,7 @@ const Experiencia = ({ language }) => {
                                 <button
                                     key={index}
                                     className="showtime-button"
-                                    onClick={() => handleShowtimeClick(showtime.room_id)} // Pasa el room_id al hacer clic
+                                    onClick={() => handleShowtimeClick(showtime.room_id, showtime.showtime)} // Pasa el room_id y showtime
                                 >
                                     {showtime.showtime}
                                 </button>

@@ -170,6 +170,7 @@ button.confirm {
     cursor: pointer; /* Cursor de mano */
     border-radius: 5px; /* Bordes redondeados */
     transition: background-color 0.3s; /* Transición de color */
+   
 }
 
 button.confirm:hover {
