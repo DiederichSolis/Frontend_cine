@@ -1,60 +1,53 @@
-import './RoomCard.css'; // Importa los estilos para el componente
-import React, { useState, useEffect } from 'react'; // Importa React y los hooks necesarios
-import clsx from 'clsx'; // Importa clsx para manejar las clases condicionales
+import './RoomCard.css';
+import React, { useState, useEffect } from 'react';
+import clsx from 'clsx';
 
-// Define una lista de 64 asientos, representados por números del 0 al 63
 const seats = Array.from({ length: 64 }, (_, i) => i);
 
 const RoomCard = ({ roomId, onBackClick }) => {
-    // Estados del componente
-    const [roomData, setRoomData] = useState(null); // Datos de la sala
-    const [seatsData, setSeatsData] = useState([]); // Datos de los asientos
-    const [selectedSeats, setSelectedSeats] = useState([]); // Asientos seleccionados
-    const [noSeatsMessage, setNoSeatsMessage] = useState(''); // Mensaje si no hay asientos
+    const [roomData, setRoomData] = useState(null);
+    const [seatsData, setSeatsData] = useState([]);
+    const [selectedSeats, setSelectedSeats] = useState([]);
+    const [noSeatsMessage, setNoSeatsMessage] = useState('');
 
-    // Efecto para obtener los datos de la sala y los asientos cuando cambia roomId
     useEffect(() => {
-        // Función para obtener los datos de la sala
         const fetchRoomData = async () => {
             try {
                 const response = await fetch(`http://127.0.0.1:8000/rooms/${roomId}`);
                 const data = await response.json();
                 setRoomData(data);
-                console.log('Room Data:', data); // Imprime los datos de la sala en la consola
+                console.log('Room Data:', data);
             } catch (error) {
-                console.error('Error fetching room data:', error); // Maneja errores en la obtención de datos
+                console.error('Error fetching room data:', error);
             }
         };
 
-        // Función para obtener los datos de los asientos
         const fetchSeatsData = async () => {
             try {
                 const response = await fetch(`http://127.0.0.1:8000/seats/room/${roomId}`);
                 const data = await response.json();
                 
-                // Maneja el caso en que no se encuentren asientos
                 if (data.message === "No seats found for this room") {
-                    setNoSeatsMessage('Aún no se han asignado asientos a esta sala');
+                    setNoSeatsMessage('Lo lamentamos!!, Aún no se han asignado asientos a esta sala');
                 } else {
                     setSeatsData(data);
                     setNoSeatsMessage('');
                 }
 
-                console.log('Seats Data:', data); // Imprime los datos de los asientos en la consola
+                console.log('Seats Data:', data);
             } catch (error) {
-                console.error('Error fetching seats data:', error); // Maneja errores en la obtención de datos
+                console.error('Error fetching seats data:', error);
                 setNoSeatsMessage('Error al obtener la información de los asientos');
             }
         };
 
-        fetchRoomData(); // Obtiene los datos de la sala
-        fetchSeatsData(); // Obtiene los datos de los asientos
+        fetchRoomData();
+        fetchSeatsData();
     }, [roomId]);
 
-    // Maneja el cambio de estado al seleccionar o deseleccionar un asiento
     const handleSelectedState = (seatId) => {
         const seat = seatsData.find(s => s.id === seatId);
-        if (!seat.is_available) return; // No permite seleccionar asientos no disponibles
+        if (!seat.is_available) return;
 
         const isSelected = selectedSeats.includes(seatId);
         if (isSelected) {
@@ -64,10 +57,8 @@ const RoomCard = ({ roomId, onBackClick }) => {
         }
     };
 
-    // Maneja la confirmación de selección de asientos
     const handleConfirm = async () => {
         try {
-            // Prepara las solicitudes de actualización para cada asiento seleccionado
             const updateRequests = selectedSeats.map(seatId => {
                 const seat = seatsData.find(s => s.id === seatId);
                 if (!seat) return null;
@@ -77,18 +68,15 @@ const RoomCard = ({ roomId, onBackClick }) => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ is_available: false }), // Marca el asiento como ocupado
+                    body: JSON.stringify({ is_available: false }),
                 });
             }).filter(request => request !== null);
 
-            // Ejecuta todas las solicitudes de actualización
             const responses = await Promise.all(updateRequests);
 
-            // Verifica si todas las solicitudes fueron exitosas
             const allSuccessful = responses.every(response => response.ok);
 
             if (allSuccessful) {
-                // Actualiza el estado local de los asientos
                 setSeatsData(prevSeatsData =>
                     prevSeatsData.map(seat =>
                         selectedSeats.includes(seat.id)
@@ -97,39 +85,35 @@ const RoomCard = ({ roomId, onBackClick }) => {
                     )
                 );
                 setSelectedSeats([]);
-                alert('Seats updated successfully'); // Mensaje de éxito
+                alert('Seats updated successfully');
             } else {
-                alert('Failed to update some seats'); // Mensaje de error
+                alert('Failed to update some seats');
             }
         } catch (error) {
-            console.error('Error updating seats:', error); // Maneja errores en la actualización
-            alert('Error updating seats'); // Mensaje de error
+            console.error('Error updating seats:', error);
+            alert('Error updating seats');
         }
     };
 
-    // Muestra un mensaje de carga mientras se obtienen los datos
     if (!roomData) {
         return <p>Loading...</p>;
     }
 
     return (
         <div className="room-card">
-            <h2>{roomData.name}</h2> {/* Nombre de la sala */}
-            <p>{roomData.description}</p> {/* Descripción de la sala */}
-            <p><strong>Capacity:</strong> {roomData.capacity}</p> {/* Capacidad de la sala */}
+            <h2>{roomData.name}</h2>
+            <p>{roomData.description}</p>
+            <p><strong>Capacity:</strong> {roomData.capacity}</p>
 
-            {/* Muestra el mensaje si no hay asientos */}
             {noSeatsMessage && <p>{noSeatsMessage}</p>}
 
-            <ShowCase /> {/* Muestra la leyenda de los asientos */}
+            <ShowCase />
 
-            {/* Solo muestra la sección de asientos si hay datos de asientos disponibles */}
             {seatsData.length > 0 && (
                 <div className="Cinema">
-                    <div className="screen" /> {/* Representa la pantalla del cine */}
+                    <div className="screen" />
 
                     <div className="seats">
-                        {/* Ordena los asientos por su ID para mantener la posición original */}
                         {seatsData.sort((a, b) => a.id - b.id).map(seat => {
                             const isSelected = selectedSeats.includes(seat.id);
                             const isOccupied = !seat.is_available;
@@ -153,7 +137,7 @@ const RoomCard = ({ roomId, onBackClick }) => {
                                             }
                                     }
                                 >
-                                    {seat.id} {/* Muestra el ID del asiento */}
+                                    {seat.id}
                                 </span>
                             );
                         })}
@@ -161,24 +145,23 @@ const RoomCard = ({ roomId, onBackClick }) => {
                 </div>
             )}
 
-            <button onClick={handleConfirm}>Confirm</button> {/* Botón para confirmar la selección */}
-            <button onClick={onBackClick}>Volver</button> {/* Botón para volver a la pantalla anterior */}
+            <button className="confirm" onClick={handleConfirm}>Confirmar</button> {/* Botón con clase confirm */}
+            <button className="back" onClick={onBackClick}>Volver</button> {/* Botón con clase back */}
         </div>
     );
 };
 
-// Componente para mostrar la leyenda de los asientos
 function ShowCase() {
     return (
         <ul className="ShowCase">
             <li>
-                <span className="seat" /> <small>N/A</small> {/* Asiento no disponible */}
+                <span className="seat" /> <small>N/A</small>
             </li>
             <li>
-                <span className="seat selected" /> <small>Selected</small> {/* Asiento seleccionado */}
+                <span className="seat selected" /> <small>Selected</small>
             </li>
             <li>
-                <span className="seat occupied" /> <small>Occupied</small> {/* Asiento ocupado */}
+                <span className="seat occupied" /> <small>Occupied</small>
             </li>
         </ul>
     );

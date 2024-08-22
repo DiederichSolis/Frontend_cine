@@ -9,6 +9,8 @@
 
 
 
+
+
 .App {
   text-align: center;
   display: flex;
@@ -158,7 +160,24 @@
     margin: 10px 0;
 }
 
-.room-card button {
+/* Estilos para el botón Confirmar */
+button.confirm {
+    background: linear-gradient(180deg, #13505b 0%, #326273 90%); 
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de la fuente */
+    cursor: pointer; /* Cursor de mano */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Transición de color */
+}
+
+button.confirm:hover {
+    background: linear-gradient(180deg, #13505b 0%, #90A955 100%); 
+}
+
+/* Estilos para el botón Volver */
+button.back {
     padding: 10px 20px;
     background: linear-gradient(180deg, #6a040f 0%, #9d0208 100%); 
     color: white;
@@ -169,6 +188,7 @@
     transition: background-color 0.3s ease;
 }
 
-.room-card button:hover {
+button.back:hover {
     background: linear-gradient(180deg, #6a040f 0%, #ba181b 100%); 
 }
+
