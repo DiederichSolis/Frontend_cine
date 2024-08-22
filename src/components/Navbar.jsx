@@ -28,7 +28,7 @@ const Navbar = ({ onLanguageChange, language }) => {
               <Link to="experience" smooth={true} duration={500} className="catalogo">{language === 'es' ? 'Cartelera' : 'Movies'}</Link>
             </li>
             <li>
-              <Link to="contact" smooth={true} duration={500} className="catalogo">{language === 'es' ? 'Contactanos' : 'Contact US'}</Link>
+              <Link to="contact" smooth={true} duration={500} className="catalogo">{language === 'es' ? 'Contactanos' : 'Contact Us'}</Link>
             </li>
             <a href={language === 'es' ? '/terminos.pdf' : '/terminos.pdf'} download className="no-underline">
               <button className="contactarme">{language === 'es' ? 'Terminos y condiciones' : 'terms and conditions'}</button>

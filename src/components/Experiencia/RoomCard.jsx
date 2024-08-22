@@ -2,10 +2,9 @@ import './RoomCard.css';
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 
-const seats = Array.from({ length: 8 * 8 }, (_, i) => i); // Asientos en una matriz de 8x8
-
 const RoomCard = ({ roomId, onBackClick }) => {
     const [roomData, setRoomData] = useState(null);
+    const [seatsData, setSeatsData] = useState([]);
     const [selectedSeats, setSelectedSeats] = useState([]);
 
     useEffect(() => {
@@ -20,19 +19,57 @@ const RoomCard = ({ roomId, onBackClick }) => {
             }
         };
 
+        const fetchSeatsData = async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/seats');
+                const data = await response.json();
+                setSeatsData(data);
+                console.log('Seats Data:', data);
+            } catch (error) {
+                console.error('Error fetching seats data:', error);
+            }
+        };
+
         fetchRoomData();
+        fetchSeatsData();
     }, [roomId]);
 
-    const handleSelectedState = (seat) => {
-        const isSelected = selectedSeats.includes(seat);
+    const handleSelectedState = (seatId) => {
+        const seat = seatsData.find(s => s.id === seatId);
+        if (!seat.is_available) return;
+
+        const isSelected = selectedSeats.includes(seatId);
         if (isSelected) {
-            setSelectedSeats(selectedSeats.filter(selectedSeat => selectedSeat !== seat));
+            setSelectedSeats(selectedSeats.filter(selectedSeat => selectedSeat !== seatId));
         } else {
-            setSelectedSeats([...selectedSeats, seat]);
+            setSelectedSeats([...selectedSeats, seatId]);
         }
     };
 
-    if (!roomData) {
+    const handleConfirm = async () => {
+        try {
+            const updatedSeats = seatsData.map(seat => ({
+                ...seat,
+                is_available: selectedSeats.includes(seat.id) ? false : seat.is_available,
+            }));
+
+            await fetch('http://127.0.0.1:8000/seats', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedSeats),
+            });
+
+            alert('Seats updated successfully');
+            setSeatsData(updatedSeats);
+            setSelectedSeats([]);
+        } catch (error) {
+            console.error('Error updating seats:', error);
+        }
+    };
+
+    if (!roomData || !seatsData.length) {
         return <p>Loading...</p>;
     }
 
@@ -48,25 +85,25 @@ const RoomCard = ({ roomId, onBackClick }) => {
                 <div className="screen" />
 
                 <div className="seats">
-                    {seats.map(seat => {
-                        const isSelected = selectedSeats.includes(seat);
-                        const isOccupied = roomData.occupiedSeats && roomData.occupiedSeats.includes(seat);
+                    {seatsData.map(seat => {
+                        const isSelected = selectedSeats.includes(seat.id);
+                        const isOccupied = !seat.is_available;
                         return (
                             <span
                                 tabIndex="0"
-                                key={seat}
+                                key={seat.id}
                                 className={clsx(
                                     'seat',
                                     isSelected && 'selected',
                                     isOccupied && 'occupied',
                                 )}
-                                onClick={isOccupied ? null : () => handleSelectedState(seat)}
+                                onClick={isOccupied ? null : () => handleSelectedState(seat.id)}
                                 onKeyPress={
                                     isOccupied
                                         ? null
                                         : e => {
                                             if (e.key === 'Enter') {
-                                                handleSelectedState(seat);
+                                                handleSelectedState(seat.id);
                                             }
                                         }
                                 }
@@ -75,7 +112,8 @@ const RoomCard = ({ roomId, onBackClick }) => {
                     })}
                 </div>
             </div>
-            
+
+            <button onClick={handleConfirm}>Confirm</button>
             <button onClick={onBackClick}>Volver</button>
         </div>
     );
