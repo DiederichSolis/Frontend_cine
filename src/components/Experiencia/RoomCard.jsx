@@ -16,6 +16,10 @@ const RoomCard = ({ roomId, onBackClick, movieName, showtime }) => {
     const [noSeatsMessage, setNoSeatsMessage] = useState('');
     // Estado para guardar la información de la compra
     const [purchaseData, setPurchaseData] = useState([]);
+    // Estado para mostrar la tarjeta de confirmación
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    // Datos de la compra confirmada
+    const [confirmationData, setConfirmationData] = useState(null);
 
     // useEffect para obtener datos de la sala y asientos al montar el componente
     useEffect(() => {
@@ -93,6 +97,8 @@ const RoomCard = ({ roomId, onBackClick, movieName, showtime }) => {
 
             // Actualizar el estado con la nueva compra
             setPurchaseData([...purchaseData, newPurchase]);
+            setConfirmationData(newPurchase); // Establecer los datos de la confirmación
+            setShowConfirmation(true); // Mostrar la tarjeta de confirmación
 
             // Mostrar la compra en consola
             console.log('New Purchase:', newPurchase);
@@ -132,6 +138,12 @@ const RoomCard = ({ roomId, onBackClick, movieName, showtime }) => {
             console.error('Error updating seats:', error);
             alert('Error updating seats');
         }
+    };
+
+    // Función para manejar el clic en el botón "Listo"
+    const handleDone = () => {
+        setShowConfirmation(false);
+        onBackClick(); // Redirige al componente ExperienciaCard
     };
 
     // Muestra un mensaje de carga si no se han cargado los datos de la sala
@@ -189,6 +201,24 @@ const RoomCard = ({ roomId, onBackClick, movieName, showtime }) => {
 
             <button className="confirm" onClick={handleConfirm}>Confirmar</button> {/* Botón con clase confirm */}
             <button className="back" onClick={onBackClick}>Volver</button> {/* Botón con clase back */}
+
+            {/* Mostrar tarjeta de confirmación si showConfirmation es verdadero */}
+            {showConfirmation && confirmationData && (
+                <div className="confirmation-card">
+                    <h3>Confirmación de Compra</h3>
+                    <p><strong>Película:</strong> {confirmationData.movieName}</p>
+                    <p><strong>Horario:</strong> {confirmationData.showtime}</p>
+                    <p><strong>Sala:</strong> {confirmationData.room}</p>
+                    <p><strong>Asientos:</strong></p>
+                    <ul>
+                        {confirmationData.seats.map(seat => (
+                            <li key={seat.id}>Asiento {seat.id} - ${seat.price}</li>
+                        ))}
+                    </ul>
+                    <p><strong>Total:</strong> ${confirmationData.total}</p>
+                    <button className="done" onClick={handleDone}>Listo</button> {/* Botón para volver */}
+                </div>
+            )}
         </div>
     );
 };

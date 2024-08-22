@@ -7,8 +7,44 @@
   box-sizing: border-box;
 }
 
+.confirmation-card {
+    border: 1px solid #ddd;
+    padding: 16px;
+    margin-top: 16px;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #495057 0%, #326273 90%); 
+}
 
+.confirmation-card h3 {
+    margin-top: 0;
+}
 
+.confirmation-card ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.confirmation-card ul li {
+    margin-bottom: 8px;
+}
+
+.done {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.done:hover {
+    background-color: #45a049;
+}
 
 
 .App {
