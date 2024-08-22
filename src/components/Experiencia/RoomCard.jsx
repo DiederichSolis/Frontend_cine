@@ -2,6 +2,8 @@ import './RoomCard.css';
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 
+const seats = Array.from({ length: 64 }, (_, i) => i); // Cantidad de asientos
+
 const RoomCard = ({ roomId, onBackClick }) => {
     const [roomData, setRoomData] = useState(null);
     const [seatsData, setSeatsData] = useState([]);
@@ -48,30 +50,52 @@ const RoomCard = ({ roomId, onBackClick }) => {
 
     const handleConfirm = async () => {
         try {
-            const updatedSeats = seatsData.map(seat => ({
-                ...seat,
-                is_available: selectedSeats.includes(seat.id) ? false : seat.is_available,
-            }));
+            // Prepare the update requests for each selected seat
+            const updateRequests = selectedSeats.map(seatId => {
+                const seat = seatsData.find(s => s.id === seatId);
+                if (!seat) return null;
+                
+                return fetch(`http://127.0.0.1:8000/seats/${seatId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ is_available: false }),
+                });
+            }).filter(request => request !== null);
 
-            await fetch('http://127.0.0.1:8000/seats', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updatedSeats),
-            });
+            // Execute all the requests
+            const responses = await Promise.all(updateRequests);
 
-            alert('Seats updated successfully');
-            setSeatsData(updatedSeats);
-            setSelectedSeats([]);
+            // Check if all requests were successful
+            const allSuccessful = responses.every(response => response.ok);
+
+            if (allSuccessful) {
+                // Update the local state
+                setSeatsData(prevSeatsData =>
+                    prevSeatsData.map(seat =>
+                        selectedSeats.includes(seat.id)
+                            ? { ...seat, is_available: false }
+                            : seat
+                    )
+                );
+                setSelectedSeats([]);
+                alert('Seats updated successfully');
+            } else {
+                alert('Failed to update some seats');
+            }
         } catch (error) {
             console.error('Error updating seats:', error);
+            alert('Error updating seats');
         }
     };
 
     if (!roomData || !seatsData.length) {
         return <p>Loading...</p>;
     }
+
+    // Order seats by their original position, ensuring occupied seats are not moved
+    const orderedSeats = seatsData.sort((a, b) => a.id - b.id);
 
     return (
         <div className="room-card">
@@ -85,7 +109,7 @@ const RoomCard = ({ roomId, onBackClick }) => {
                 <div className="screen" />
 
                 <div className="seats">
-                    {seatsData.map(seat => {
+                    {orderedSeats.map(seat => {
                         const isSelected = selectedSeats.includes(seat.id);
                         const isOccupied = !seat.is_available;
                         return (
@@ -107,7 +131,9 @@ const RoomCard = ({ roomId, onBackClick }) => {
                                             }
                                         }
                                 }
-                            />
+                            >
+                                {seat.id}
+                            </span>
                         );
                     })}
                 </div>
