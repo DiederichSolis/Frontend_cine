@@ -72,7 +72,11 @@ const RoomCard = ({ roomId, onBackClick, movieName, showtime }) => {
     const handleConfirm = async () => {
         try {
             const selectedSeatsData = selectedSeats.map(seatId => {
-                return seatsData.find(s => s.id === seatId);
+                const seat = seatsData.find(s => s.id === seatId);
+                return {
+                    id: seat.id,
+                    price: Number(seat.price), // Asegura que price sea un número
+                };
             });
 
             // Calcular el total de los precios de los asientos seleccionados
@@ -82,11 +86,8 @@ const RoomCard = ({ roomId, onBackClick, movieName, showtime }) => {
             const newPurchase = {
                 movieName: movieName, // Usa movieName recibido como prop
                 showtime: showtime,   // Usa showtime recibido como prop
-                room: roomData.room, // Suponiendo que la información de la sala se encuentra en roomData
-                seats: selectedSeatsData.map(seat => ({
-                    id: seat.id,
-                    price: seat.price,
-                })),
+                room: roomData.name,  // Usa el nombre de la sala desde roomData
+                seats: selectedSeatsData,
                 total,
             };
 
