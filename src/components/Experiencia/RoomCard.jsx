@@ -60,25 +60,25 @@ const RoomCard = ({ roomId, onBackClick, movieName, showtime }) => {
     }, [roomId]);
 
     // Función para manejar la selección de un asiento
-    const handleSelectedState = (seatId) => {
-        const seat = seatsData.find(s => s.id === seatId);
+    const handleSelectedState = (seatNumber) => {
+        const seat = seatsData.find(s => s.seat_number === seatNumber);
         if (!seat.is_available) return;
 
-        const isSelected = selectedSeats.includes(seatId);
+        const isSelected = selectedSeats.includes(seatNumber);
         if (isSelected) {
-            setSelectedSeats(selectedSeats.filter(selectedSeat => selectedSeat !== seatId));
+            setSelectedSeats(selectedSeats.filter(selectedSeat => selectedSeat !== seatNumber));
         } else {
-            setSelectedSeats([...selectedSeats, seatId]);
+            setSelectedSeats([...selectedSeats, seatNumber]);
         }
     };
 
     // Función para confirmar la selección de asientos
     const handleConfirm = async () => {
         try {
-            const selectedSeatsData = selectedSeats.map(seatId => {
-                const seat = seatsData.find(s => s.id === seatId);
+            const selectedSeatsData = selectedSeats.map(seatNumber => {
+                const seat = seatsData.find(s => s.seat_number === seatNumber);
                 return {
-                    id: seat.id,
+                    seat_number: seat.seat_number,
                     price: Number(seat.price), // Asegura que price sea un número
                 };
             });
@@ -104,11 +104,11 @@ const RoomCard = ({ roomId, onBackClick, movieName, showtime }) => {
             console.log('New Purchase:', newPurchase);
 
             // Aquí puedes continuar con el proceso de actualización de los asientos en el servidor si es necesario
-            const updateRequests = selectedSeats.map(seatId => {
-                const seat = seatsData.find(s => s.id === seatId);
+            const updateRequests = selectedSeats.map(seatNumber => {
+                const seat = seatsData.find(s => s.seat_number === seatNumber);
                 if (!seat) return null;
                 
-                return fetch(`http://127.0.0.1:8000/seats/${seatId}`, {
+                return fetch(`http://127.0.0.1:8000/seats/${seat.id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ const RoomCard = ({ roomId, onBackClick, movieName, showtime }) => {
             if (allSuccessful) {
                 setSeatsData(prevSeatsData =>
                     prevSeatsData.map(seat =>
-                        selectedSeats.includes(seat.id)
+                        selectedSeats.includes(seat.seat_number)
                             ? { ...seat, is_available: false }
                             : seat
                     )
@@ -168,30 +168,30 @@ const RoomCard = ({ roomId, onBackClick, movieName, showtime }) => {
                     <div className="screen" />
 
                     <div className="seats">
-                        {seatsData.sort((a, b) => a.id - b.id).map(seat => {
-                            const isSelected = selectedSeats.includes(seat.id);
+                        {seatsData.sort((a, b) => a.seat_number - b.seat_number).map(seat => {
+                            const isSelected = selectedSeats.includes(seat.seat_number);
                             const isOccupied = !seat.is_available;
                             return (
                                 <span
                                     tabIndex="0"
-                                    key={seat.id}
+                                    key={seat.seat_number}
                                     className={clsx(
                                         'seat',
                                         isSelected && 'selected',
                                         isOccupied && 'occupied',
                                     )}
-                                    onClick={isOccupied ? null : () => handleSelectedState(seat.id)}
+                                    onClick={isOccupied ? null : () => handleSelectedState(seat.seat_number)}
                                     onKeyPress={
                                         isOccupied
                                             ? null
                                             : e => {
                                                 if (e.key === 'Enter') {
-                                                    handleSelectedState(seat.id);
+                                                    handleSelectedState(seat.seat_number);
                                                 }
                                             }
                                     }
                                 >
-                                    {seat.id}
+                                    {seat.seat_number}
                                 </span>
                             );
                         })}
@@ -212,7 +212,7 @@ const RoomCard = ({ roomId, onBackClick, movieName, showtime }) => {
                     <p><strong>Asientos:</strong></p>
                     <ul>
                         {confirmationData.seats.map(seat => (
-                            <li key={seat.id}>Asiento {seat.id} - ${seat.price}</li>
+                            <li key={seat.seat_number}>Asiento {seat.seat_number} - ${seat.price}</li>
                         ))}
                     </ul>
                     <p><strong>Total:</strong> ${confirmationData.total}</p>
@@ -231,10 +231,10 @@ function ShowCase() {
                 <span className="seat" /> <small>N/A</small>
             </li>
             <li>
-                <span className="seat selected" /> <small>Selected</small>
+                <span className="seat selected" /> <small>Seleccionado</small>
             </li>
             <li>
-                <span className="seat occupied" /> <small>Occupied</small>
+                <span className="seat occupied" /> <small>Ocupado</small>
             </li>
         </ul>
     );
